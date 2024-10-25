@@ -45,6 +45,7 @@ public abstract class Pago{
 public abstract class PagoElectronico extends Pago{
     //atributo aqui
     protected boolean loggedIn;
+    abstract public void iniciarSesion();
 }
 
 public class GeneradorFactura{
@@ -57,6 +58,7 @@ public class GeneradorFactura{
 }
 
 public class PagoPayPal extends PagoElectronico{
+    @Override
     public void iniciarSesion(){
         loggedIn = true;
     }
