@@ -6,61 +6,64 @@ package SeccionC;
 
 public class Compra {
     private Pago pago;
-    private PagoPayPal pagoPayPal;
     private List articulos;
 
     public Compra(Pago pago) {
-        // inicializaciones
-    }
-
-    public Compra(PagoPayPal pagoPaypal) {
-        // inicializaciones
+    // inicializaciones
     }
 
     public void agregarArticulo(Articulo articulo) {
-        // agregar un artículo a la compra
+    // agregar un artículo a la compra
     }
 
     public void removerArticulo(Articulo articulo) {
-        // remover un artículo de la compra
+    // remover un artículo de la compra
     }
 }
+
+
 
 public class Notificacion {
-    private int tipoNotificacion;
+    private TipoNotificacion tipoNotificacion;
 
     public void notificar(Pago pago) {
-        if (tipoNotificacion == 1) {
-            // enviarEmail();
-        } else {
-            // enviarSMS();
-        }
+    tipoNotificacion.notificar(Pago pago);
     }
 }
 
-public class Pago{
+public interface TipoNotificacion{
+    public void notificar(Pago pago);
+}
+
+public abstract class Pago{
     //atributo aqui
     public void realizarCobro(double monto){
-        //cargar el monto de compra al medio de pago
-    }
-    public void calcularImpuestosFactura(){
-        //calcular los impuestos asociados a la compra
-    }
-    public void generarFactura(){
-        //generar una nueva factura
+    //cargar el monto de compra al medio de pago
     }
 }
 
-public class PagoPayPal extends Pago{
-    private boolean loggedIn; //conexión a cuenta PayPal
-    @Override
-    public void realizarCobro(double monto){
-        if ( !loggedIn ){
-            return;
-        }
-        //cargar el monto de compra al medio de pago
+public abstract class PagoElectronico extends Pago{
+    //atributo aqui
+    protected boolean loggedIn;
+}
+
+public class GeneradorFactura{
+    public void calcularImpuestosFactura(){
+    //calcular los impuestos asociados a la compra
+    }
+    public void generarFactura(){
+    //generar una nueva factura
     }
 }
-        }
+
+public class PagoPayPal extends PagoElectronico{
+    public void iniciarSesion(){
+        loggedIn = true;
+    }
+    
+    @Override
+    public void realizarCobro(double monto){
+    iniciarSesion();
+    //cargar el monto de compra al medio de pago
     }
 }
